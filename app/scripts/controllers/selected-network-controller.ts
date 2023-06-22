@@ -31,7 +31,7 @@ const methodNameGetEncryptionPublicKey = 'eth_getEncryptionPublicKey';
 
 const stateMetadata = {
   domains: { persist: true, anonymous: false },
-  queue: { persist: false, anonymous: false }
+  queue: { persist: false, anonymous: false },
 };
 
 const getDefaultState = () => ({
@@ -58,17 +58,15 @@ export type GetSelectedNetworkStateChange = {
 
 export type SelectedNetworkControllerActions = GetSelectedNetworkState;
 
-export type SelectedNetworkControllerEvents =
-  GetSelectedNetworkStateChange;
+export type SelectedNetworkControllerEvents = GetSelectedNetworkStateChange;
 
-export type SelectedNetworkControllerMessenger =
-  RestrictedControllerMessenger<
-    typeof controllerName,
-    SelectedNetworkControllerActions,
-    SelectedNetworkControllerEvents,
-    never,
-    never
-  >;
+export type SelectedNetworkControllerMessenger = RestrictedControllerMessenger<
+  typeof controllerName,
+  SelectedNetworkControllerActions,
+  SelectedNetworkControllerEvents,
+  never,
+  never
+>;
 
 type SwitchNetwork = (chainId: ChainId) => void;
 
@@ -94,7 +92,14 @@ export default class SelectedNetworkController extends BaseControllerV2<
    *
    * @param options - The controller options.
    * @param options.messenger - The restricted controller messenger for the EncryptionPublicKey controller.
+<<<<<<< HEAD
    * @param options.switchNetwork - A function for switching the current network.
+=======
+   * @param options.keyringController - An instance of a keyring controller used to extract the encryption public key.
+   * @param options.getState - Callback to retrieve all user state.
+   * @param options.metricsEvent - A function for emitting a metric event.
+   * @param options.switchNetwork
+>>>>>>> 7f15b5c791 (wip)
    */
   constructor({ messenger, switchNetwork }: SelectedNetworkControllerOptions) {
     super({
