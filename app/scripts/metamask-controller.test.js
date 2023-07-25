@@ -321,7 +321,7 @@ describe('MetaMaskController', function () {
       beforeEach(async function () {
         const password = 'a-fake-password';
         await metamaskController.createNewVaultAndRestore(password, TEST_SEED);
-        await metamaskController.importAccountWithStrategy('Private Key', [
+        await metamaskController.importAccountWithStrategy('privateKey', [
           importPrivkey,
         ]);
       });
