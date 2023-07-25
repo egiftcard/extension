@@ -73,7 +73,11 @@ export default class PreferencesController {
         ? LedgerTransportTypes.webhid
         : LedgerTransportTypes.u2f,
       snapRegistryList: {},
+
+      ///: BEGIN:ONLY_INCLUDE_IN(build-main,build-mmi,build-beta)
       transactionSecurityCheckEnabled: false,
+      ///: END:ONLY_INCLUDE_IN
+
       theme: ThemeType.os,
       ///: BEGIN:ONLY_INCLUDE_IN(keyring-snaps)
       snapsAddSnapAccountModalDismissed: false,
@@ -220,6 +224,7 @@ export default class PreferencesController {
     this.store.updateState({ theme: val });
   }
 
+  ///: BEGIN:ONLY_INCLUDE_IN(build-main,build-mmi,build-beta)
   /**
    * Setter for the `transactionSecurityCheckEnabled` property
    *
@@ -230,6 +235,7 @@ export default class PreferencesController {
       transactionSecurityCheckEnabled,
     });
   }
+  ///: END:ONLY_INCLUDE_IN
 
   /**
    * Add new methodData to state, to avoid requesting this information again through Infura

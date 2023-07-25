@@ -1,20 +1,23 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ToggleButton from '../../../components/ui/toggle-button';
+import {
+  ///: BEGIN:ONLY_INCLUDE_IN(build-main,build-mmi,build-beta)
+  FontWeight,
+  ///: END:ONLY_INCLUDE_IN
+  TextVariant,
+  TextColor,
+} from '../../../helpers/constants/design-system';
 import {
   getNumberOfSettingsInSection,
   handleSettingsRefs,
 } from '../../../helpers/utils/settings-search';
-import { MetaMetricsEventCategory } from '../../../../shared/constants/metametrics';
-import { Text } from '../../../components/component-library';
-import {
-  FontWeight,
-  TextColor,
-  TextVariant,
-} from '../../../helpers/constants/design-system';
+
 ///: BEGIN:ONLY_INCLUDE_IN(desktop)
 import DesktopEnableButton from '../../../components/app/desktop-enable-button';
 ///: END:ONLY_INCLUDE_IN
+import { MetaMetricsEventCategory } from '../../../../shared/constants/metametrics';
+import { Text } from '../../../components/component-library';
+import ToggleButton from '../../../components/ui/toggle-button';
 
 export default class ExperimentalTab extends PureComponent {
   static contextTypes = {
@@ -23,8 +26,16 @@ export default class ExperimentalTab extends PureComponent {
   };
 
   static propTypes = {
+    useNftDetection: PropTypes.bool,
+    setUseNftDetection: PropTypes.func,
+    setOpenSeaEnabled: PropTypes.func,
+    openSeaEnabled: PropTypes.bool,
+
+    ///: BEGIN:ONLY_INCLUDE_IN(build-main,build-mmi,build-beta)
     transactionSecurityCheckEnabled: PropTypes.bool,
     setTransactionSecurityCheckEnabled: PropTypes.func,
+    ///: END:ONLY_INCLUDE_IN
+
     ///: BEGIN:ONLY_INCLUDE_IN(blockaid)
     securityAlertsEnabled: PropTypes.bool,
     setSecurityAlertsEnabled: PropTypes.func,
@@ -132,6 +143,95 @@ export default class ExperimentalTab extends PureComponent {
   }
   ///: END:ONLY_INCLUDE_IN
 
+  renderOpenSeaEnabledToggle() {
+    const { t } = this.context;
+    const {
+      openSeaEnabled,
+      setOpenSeaEnabled,
+      useNftDetection,
+      setUseNftDetection,
+    } = this.props;
+
+    return (
+      <>
+        <div ref={this.settingsRefs[0]} className="settings-page__content-row">
+          <div className="settings-page__content-item">
+            <span>{t('enableOpenSeaAPI')}</span>
+            <div className="settings-page__content-description">
+              {t('enableOpenSeaAPIDescription')}
+            </div>
+          </div>
+          <div className="settings-page__content-item">
+            <div className="settings-page__content-item-col">
+              <ToggleButton
+                value={openSeaEnabled}
+                onToggle={(value) => {
+                  this.context.trackEvent({
+                    category: MetaMetricsEventCategory.Settings,
+                    event: 'Enabled/Disable OpenSea',
+                    properties: {
+                      action: 'Enabled/Disable OpenSea',
+                      legacy_event: true,
+                    },
+                  });
+                  // value is positive when being toggled off
+                  if (value && useNftDetection) {
+                    setUseNftDetection(false);
+                  }
+                  setOpenSeaEnabled(!value);
+                }}
+                offLabel={t('off')}
+                onLabel={t('on')}
+              />
+            </div>
+          </div>
+        </div>
+        <div ref={this.settingsRefs[1]} className="settings-page__content-row">
+          <div className="settings-page__content-item">
+            <span>{t('useNftDetection')}</span>
+            <div className="settings-page__content-description">
+              <Text color={TextColor.textAlternative}>
+                {t('useNftDetectionDescription')}
+              </Text>
+              <ul className="settings-page__content-unordered-list">
+                <li>{t('useNftDetectionDescriptionLine2')}</li>
+                <li>{t('useNftDetectionDescriptionLine3')}</li>
+                <li>{t('useNftDetectionDescriptionLine4')}</li>
+              </ul>
+              <Text color={TextColor.textAlternative} paddingTop={4}>
+                {t('useNftDetectionDescriptionLine5')}
+              </Text>
+            </div>
+          </div>
+          <div className="settings-page__content-item">
+            <div className="settings-page__content-item-col">
+              <ToggleButton
+                value={useNftDetection}
+                onToggle={(value) => {
+                  this.context.trackEvent({
+                    category: MetaMetricsEventCategory.Settings,
+                    event: 'NFT Detected',
+                    properties: {
+                      action: 'NFT Detected',
+                      legacy_event: true,
+                    },
+                  });
+                  if (!value && !openSeaEnabled) {
+                    setOpenSeaEnabled(!value);
+                  }
+                  setUseNftDetection(!value);
+                }}
+                offLabel={t('off')}
+                onLabel={t('on')}
+              />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  ///: BEGIN:ONLY_INCLUDE_IN(build-main,build-mmi,build-beta)
   renderTransactionSecurityCheckToggle() {
     const { t } = this.context;
 
@@ -225,6 +325,7 @@ export default class ExperimentalTab extends PureComponent {
       </>
     );
   }
+  ///: END:ONLY_INCLUDE_IN
 
   ///: BEGIN:ONLY_INCLUDE_IN(desktop)
   renderDesktopEnableButton() {
@@ -257,7 +358,12 @@ export default class ExperimentalTab extends PureComponent {
           this.renderSecurityAlertsToggle()
           ///: END:ONLY_INCLUDE_IN
         }
-        {this.renderTransactionSecurityCheckToggle()}
+        {
+          ///: BEGIN:ONLY_INCLUDE_IN(build-main,build-mmi,build-beta)
+          this.renderTransactionSecurityCheckToggle()
+          ///: END:ONLY_INCLUDE_IN
+        }
+        {this.renderOpenSeaEnabledToggle()}
         {
           ///: BEGIN:ONLY_INCLUDE_IN(desktop)
           this.renderDesktopEnableButton()
