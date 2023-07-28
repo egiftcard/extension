@@ -115,7 +115,7 @@ export default class ConfirmPageContainerContent extends Component {
     } = this.props;
 
     return (
-      <Tabs>
+      <Tabs defaultActiveTabKey="details">
         <Tab
           className="confirm-page-container-content__tab"
           name={t('details')}
