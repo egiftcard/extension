@@ -112,6 +112,9 @@ async function start() {
 
   let isUIInitialised = false;
 
+  // Start the logo animation
+  document.querySelector('.loading-logo').classList.add('activated');
+
   // setup stream to background
   extensionPort = browser.runtime.connect({ name: windowType });
   let connectionStream = new PortStream(extensionPort);
