@@ -293,7 +293,6 @@ export default class MetamaskController extends EventEmitter {
 
     this.selectedNetworkController = new SelectedNetworkController({
       messenger: this.controllerMessenger,
-      switchNetwork: (a) => {},
     });
 
     this.approvalController = new ApprovalController({
@@ -1478,7 +1477,6 @@ export default class MetamaskController extends EventEmitter {
       this.swapsController.setTradeTxId(txMeta.id);
     });
 
-
     // ensure accountTracker updates balances after network change
     networkControllerMessenger.subscribe(
       'NetworkController:networkDidChange',
@@ -2130,8 +2128,6 @@ export default class MetamaskController extends EventEmitter {
       isUnlocked: this.isUnlocked(),
       ...this.getProviderNetworkState(),
       accounts: await this.getPermittedAccounts(origin),
-      // configurationsByChainId:
-      //   this.selectedNetworkController.getAllConfigurationsByChainId(),
     };
   }
 
