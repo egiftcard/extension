@@ -302,7 +302,7 @@ describe('MetaMaskController', function () {
         'createNewVaultAndKeychain',
       );
       sandbox.spy(
-        metamaskController.keyringController,
+        metamaskController.coreKeyringController,
         'createNewVaultAndRestore',
       );
     });
@@ -418,7 +418,7 @@ describe('MetaMaskController', function () {
         await metamaskController.createNewVaultAndRestore(password, TEST_SEED);
 
         assert(
-          metamaskController.keyringController.createNewVaultAndRestore
+          metamaskController.coreKeyringController.createNewVaultAndRestore
             .calledTwice,
         );
       });
