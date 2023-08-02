@@ -131,10 +131,16 @@ const ERROR_CONNECTING_TO_RPC = {
   },
 };
 
-async function getAlerts(pendingApproval) {
+async function getAlerts(pendingApproval, state) {
   const alerts = [];
-  const safeChainsList =
-    (await fetchWithCache('https://chainid.network/chains.json')) || [];
+
+  let safeChainsList = [];
+  if (state.useSafeChainsListValidation) {
+    safeChainsList = await fetchWithCache(
+      'https://chainid.network/chains.json',
+    );
+  }
+
   const matchedChain = safeChainsList.find(
     (chain) =>
       chain.chainId === parseInt(pendingApproval.requestData.chainId, 16),

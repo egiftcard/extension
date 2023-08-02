@@ -68,6 +68,12 @@ describe('Security Tab', () => {
     );
   });
 
+  it('toggles network details validation', async () => {
+    expect(await toggleCheckbox('useSafeChainsListValidation', true)).toBe(
+      true,
+    );
+  });
+
   it('toggles metaMetrics', async () => {
     expect(await toggleCheckbox('participateInMetaMetrics', false)).toBe(true);
   });

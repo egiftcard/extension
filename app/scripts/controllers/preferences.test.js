@@ -194,6 +194,27 @@ describe('preferences controller', function () {
     });
   });
 
+  describe('setUseSafeChainsListValidation', function () {
+    it('should default to true', function () {
+      const state = preferencesController.store.getState();
+      assert.equal(state.useSafeChainsListValidation, true);
+    });
+
+    it('should set the `setUseSafeChainsListValidation` property in state', function () {
+      assert.equal(
+        preferencesController.store.getState().useSafeChainsListValidation,
+        true,
+      );
+
+      preferencesController.setUseSafeChainsListValidation(false);
+
+      assert.equal(
+        preferencesController.store.getState().useSafeChainsListValidation,
+        false,
+      );
+    });
+  });
+
   describe('setUseTokenDetection', function () {
     it('should default to false', function () {
       const state = preferencesController.store.getState();

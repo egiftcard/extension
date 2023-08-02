@@ -59,6 +59,8 @@ export default class SecurityTab extends PureComponent {
     ipfsGateway: PropTypes.string.isRequired,
     useMultiAccountBalanceChecker: PropTypes.bool.isRequired,
     setUseMultiAccountBalanceChecker: PropTypes.func.isRequired,
+    useSafeChainsListValidation: PropTypes.bool.isRequired,
+    setUseSafeChainsListValidation: PropTypes.func.isRequired,
     useCurrencyRateCheck: PropTypes.bool.isRequired,
     setUseCurrencyRateCheck: PropTypes.func.isRequired,
     useAddressBarEnsResolution: PropTypes.bool.isRequired,
@@ -309,6 +311,38 @@ export default class SecurityTab extends PureComponent {
             >
               {t('addCustomNetwork')}
             </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderSafeChainsListValidationToggle() {
+    const { t } = this.context;
+    const { useSafeChainsListValidation, setUseSafeChainsListValidation } =
+      this.props;
+
+    return (
+      <div ref={this.settingsRefs[2]} className="settings-page__content-row">
+        <div className="settings-page__content-item">
+          <span>{t('useSafeChainsListValidation')}</span>
+          <div className="settings-page__content-description">
+            {t('useSafeChainsListValidationDescription1') + ' '}
+            <b>chainid.network</b>
+            {' ' + t('useSafeChainsListValidationDescription2')}
+          </div>
+        </div>
+        <div className="settings-page__content-item">
+          <div
+            className="settings-page__content-item-col"
+            data-testid="useSafeChainsListValidation"
+          >
+            <ToggleButton
+              value={useSafeChainsListValidation}
+              onToggle={(value) => setUseSafeChainsListValidation(!value)}
+              offLabel={t('off')}
+              onLabel={t('on')}
+            />
           </div>
         </div>
       </div>
@@ -615,6 +649,7 @@ export default class SecurityTab extends PureComponent {
         <span className="settings-page__security-tab-sub-header__bold">
           {this.context.t('privacy')}
         </span>
+
         <div>
           <span className="settings-page__security-tab-sub-header">Alerts</span>
         </div>
@@ -629,13 +664,16 @@ export default class SecurityTab extends PureComponent {
           {this.renderCurrencyRateCheckToggle()}
           {this.renderIncomingTransactionsOptIn()}
         </div>
+
         <span className="settings-page__security-tab-sub-header">
           {this.context.t('networkProvider')}
         </span>
         <div className="settings-page__content-padded">
           {this.renderChooseYourNetworkButton()}
+          {this.renderSafeChainsListValidationToggle()}
           {this.renderIpfsGatewayControl()}
         </div>
+
         <span className="settings-page__security-tab-sub-header">
           {this.context.t('tokenAutoDetection')}
         </span>
@@ -643,6 +681,7 @@ export default class SecurityTab extends PureComponent {
           {this.renderAutoDetectTokensToggle()}
           {this.renderBatchAccountBalanceRequestsToggle()}
         </div>
+
         <span className="settings-page__security-tab-sub-header">
           {this.context.t('metrics')}
         </span>

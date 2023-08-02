@@ -10,6 +10,7 @@ import {
   setUsePhishDetect,
   setUseTokenDetection,
   setUseAddressBarEnsResolution,
+  setUseSafeChainsListValidation,
 } from '../../../store/actions';
 import SecurityTab from './security-tab.component';
 
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
     useTokenDetection,
     ipfsGateway,
     useMultiAccountBalanceChecker,
+    useSafeChainsListValidation,
     useCurrencyRateCheck,
     useAddressBarEnsResolution,
   } = metamask;
@@ -37,6 +39,7 @@ const mapStateToProps = (state) => {
     useTokenDetection,
     ipfsGateway,
     useMultiAccountBalanceChecker,
+    useSafeChainsListValidation,
     useCurrencyRateCheck,
     useAddressBarEnsResolution,
   };
@@ -50,17 +53,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setFeatureFlag('showIncomingTransactions', shouldShow)),
     setUsePhishDetect: (val) => dispatch(setUsePhishDetect(val)),
     setUseCurrencyRateCheck: (val) => dispatch(setUseCurrencyRateCheck(val)),
-    setUseTokenDetection: (value) => {
-      return dispatch(setUseTokenDetection(value));
-    },
-    setIpfsGateway: (value) => {
-      return dispatch(setIpfsGateway(value));
-    },
-    setUseMultiAccountBalanceChecker: (value) => {
-      return dispatch(setUseMultiAccountBalanceChecker(value));
-    },
-    setUseAddressBarEnsResolution: (value) =>
-      dispatch(setUseAddressBarEnsResolution(value)),
+    setUseTokenDetection: (val) => dispatch(setUseTokenDetection(val)),
+    setIpfsGateway: (val) => dispatch(setIpfsGateway(val)),
+    setUseMultiAccountBalanceChecker: (val) =>
+      dispatch(setUseMultiAccountBalanceChecker(val)),
+    setUseSafeChainsListValidation: (val) =>
+      dispatch(setUseSafeChainsListValidation(val)),
+    setUseAddressBarEnsResolution: (val) =>
+      dispatch(setUseAddressBarEnsResolution(val)),
   };
 };
 
