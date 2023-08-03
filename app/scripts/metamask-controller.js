@@ -4661,6 +4661,13 @@ export default class MetamaskController extends EventEmitter {
    * Locks MetaMask
    */
   setLocked() {
+    const [trezorKeyring] = this.coreKeyringController.getKeyringsByType(
+      KeyringType.trezor,
+    );
+    if (trezorKeyring) {
+      trezorKeyring.dispose();
+    }
+
     if (isManifestV3) {
       this.clearLoginArtifacts();
     }
