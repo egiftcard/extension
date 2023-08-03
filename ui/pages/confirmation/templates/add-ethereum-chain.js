@@ -170,7 +170,7 @@ async function getAlerts(pendingApproval, state) {
     }
   }
 
-  if (!matchedChain) {
+  if (!matchedChain && state.useSafeChainsListValidation) {
     alerts.push(UNRECOGNIZED_CHAIN);
   }
 

@@ -677,17 +677,7 @@ async function switchToNotificationWindow(driver) {
   await driver.switchToWindowWithTitle('MetaMask Notification', windowHandles);
 }
 
-/**
- * When mocking the segment server and returning an array of mocks from the
- * mockServer method, this method will allow getting all of the seen requests
- * for each mock in the array.
- *
- * @param {WebDriver} driver
- * @param {import('mockttp').Mockttp} mockedEndpoints
- * @param {boolean} hasRequest
- * @returns {import('mockttp/dist/pluggable-admin').MockttpClientResponse[]}
- */
-async function getEventPayloads(driver, mockedEndpoints, hasRequest = true) {
+async function getMockedRequests(driver, mockedEndpoints, hasRequest = true) {
   await driver.wait(async () => {
     let isPending = true;
     for (const mockedEndpoint of mockedEndpoints) {
@@ -700,6 +690,20 @@ async function getEventPayloads(driver, mockedEndpoints, hasRequest = true) {
   for (const mockedEndpoint of mockedEndpoints) {
     mockedRequests.push(...(await mockedEndpoint.getSeenRequests()));
   }
+}
+
+/**
+ * When mocking the segment server and returning an array of mocks from the
+ * mockServer method, this method will allow getting all of the seen requests
+ * for each mock in the array.
+ *
+ * @param {WebDriver} driver
+ * @param {import('mockttp').Mockttp} mockedEndpoints
+ * @param {boolean} hasRequest
+ * @returns {import('mockttp/dist/pluggable-admin').MockttpClientResponse[]}
+ */
+async function getEventPayloads(driver, mockedEndpoints, hasRequest = true) {
+  const mockedRequests = getMockedRequests(driver, mockedEndpoints, hasRequest);
 
   return mockedRequests.map((req) => req.body.json?.batch).flat();
 }
@@ -779,6 +783,7 @@ module.exports = {
   sleepSeconds,
   terminateServiceWorker,
   switchToNotificationWindow,
+  getMockedRequests,
   getEventPayloads,
   onboardingBeginCreateNewWallet,
   onboardingChooseMetametricsOption,
