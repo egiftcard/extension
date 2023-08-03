@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import validUrl from 'valid-url';
 import log from 'loglevel';
@@ -41,6 +41,7 @@ import {
 import { decimalToHex } from '../../../../../shared/modules/conversion.utils';
 import { MetaMetricsContext } from '../../../../contexts/metametrics';
 import { getNetworkLabelKey } from '../../../../helpers/utils/i18n-helper';
+import { useSafeChainsListValidationSelector } from '../../../../selectors';
 
 /**
  * Attempts to convert the given chainId to a decimal string, for display
@@ -110,6 +111,14 @@ const NetworksForm = ({
   const [previousNetwork, setPreviousNetwork] = useState(selectedNetwork);
 
   const trackEvent = useContext(MetaMetricsContext);
+
+  const useSafeChainsListValidation = useSelector(
+    useSafeChainsListValidationSelector,
+  );
+
+  console.log('ui/pages/settings/networks-tab/networks-form/networks-form.js', {
+    useSafeChainsListValidation,
+  });
 
   const resetForm = useCallback(() => {
     setNetworkName(selectedNetworkName || '');
@@ -355,19 +364,21 @@ const NetworksForm = ({
     async (formChainId, formTickerSymbol) => {
       let warningKey;
       let warningMessage;
-      let safeChainsList;
       let providerError;
 
       if (!formChainId || !formTickerSymbol) {
         return null;
       }
 
-      try {
-        safeChainsList =
-          (await fetchWithCache('https://chainid.network/chains.json')) || [];
-      } catch (err) {
-        log.warn('Failed to fetch the chainList from chainid.network', err);
-        providerError = err;
+      let safeChainsList = [];
+      if (useSafeChainsListValidation) {
+        try {
+          safeChainsList =
+            (await fetchWithCache('https://chainid.network/chains.json')) || [];
+        } catch (err) {
+          log.warn('Failed to fetch the chainList from chainid.network', err);
+          providerError = err;
+        }
       }
 
       if (providerError) {
