@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import { hasProperty, isObject } from '@metamask/utils';
 
-export const version = 93;
+export const version = 94;
 
 /**
  * Add ticker to the providerConfig object if missing

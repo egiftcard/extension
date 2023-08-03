@@ -1,9 +1,8 @@
 import { InfuraNetworkType, NetworkType } from '@metamask/controller-utils';
-import { migrate, version } from './093';
+import { migrate, version } from './094';
 
 const PREVIOUS_VERSION = version - 1;
-
-describe('migration #93', () => {
+describe('migration #94', () => {
   it('should update the version metadata', async () => {
     const oldStorage = {
       meta: {
