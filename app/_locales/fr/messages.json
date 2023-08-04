@@ -2474,10 +2474,6 @@
   "onboardingPinExtensionTitle": {
     "message": "Votre installation de MetaMask est terminée !"
   },
-  "onboardingShowIncomingTransactionsDescription": {
-    "message": "L’affichage des transactions entrantes dans votre portefeuille repose sur la communication avec $1. Etherscan aura accès à votre adresse Ethereum et à votre adresse IP. Voir $2.",
-    "description": "$1 is a clickable link with text defined by the 'etherscan' key. $2 is a clickable link with text defined by the 'privacyMsg' key."
-  },
   "onboardingUsePhishingDetectionDescription": {
     "message": "Les alertes de détection d’hameçonnage reposent sur la communication avec $1. jsDeliver aura accès à votre adresse IP. Voir $2.",
     "description": "The $1 is the word 'jsDeliver', from key 'jsDeliver' and $2 is the words Privacy Policy from key 'privacyMsg', both separated here so that it can be wrapped as a link"
@@ -3142,10 +3138,6 @@
   },
   "showIncomingTransactions": {
     "message": "Afficher les transactions entrantes"
-  },
-  "showIncomingTransactionsDescription": {
-    "message": "Sélectionnez ceci pour utiliser Etherscan afin d’afficher les transactions entrantes dans la liste des transactions",
-    "description": "$1 is the link to etherscan url and $2 is the link to the privacy policy of consensys APIs"
   },
   "showPermissions": {
     "message": "Afficher les autorisations"

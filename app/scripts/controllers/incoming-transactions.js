@@ -82,21 +82,24 @@ export default class IncomingTransactionsController {
     this.preferencesController.store.subscribe(
       previousValueComparator((prevState, currState) => {
         const {
-          featureFlags: {
-            showIncomingTransactions: prevShowIncomingTransactions,
-          } = {},
+          incomingTransactionsPreferences: prevIncomingTransactionsPreferences,
         } = prevState;
         const {
-          featureFlags: {
-            showIncomingTransactions: currShowIncomingTransactions,
-          } = {},
+          incomingTransactionsPreferences:
+            currShowIncomingTransactionsPreferences,
         } = currState;
 
-        if (currShowIncomingTransactions === prevShowIncomingTransactions) {
+        if (
+          prevIncomingTransactionsPreferences ===
+          currShowIncomingTransactionsPreferences
+        ) {
           return;
         }
 
-        if (prevShowIncomingTransactions && !currShowIncomingTransactions) {
+        if (
+          prevIncomingTransactionsPreferences &&
+          !currShowIncomingTransactionsPreferences
+        ) {
           this.stop();
           return;
         }
@@ -301,11 +304,12 @@ export default class IncomingTransactionsController {
    * @returns {boolean} Whether or not the user has consented to show incoming transactions
    */
   _allowedToMakeFetchIncomingTx(chainId) {
-    const { featureFlags = {} } = this.preferencesController.store.getState();
+    const { incomingTransactionsPreferences } =
+      this.preferencesController.store.getState();
     const { completedOnboarding } = this.onboardingController.store.getState();
 
     const hasIncomingTransactionsFeatureEnabled = Boolean(
-      featureFlags.showIncomingTransactions,
+      incomingTransactionsPreferences[chainId],
     );
 
     const isEtherscanSupportedNetwork = Boolean(

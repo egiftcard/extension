@@ -2,7 +2,7 @@ import { strict as assert } from 'assert';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
 import nock from 'nock';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 import waitUntilCalled from '../../../test/lib/wait-until-called';
 import {
@@ -69,8 +69,10 @@ function getMockPreferencesController({
     getSelectedAddress: sinon.stub().returns(MOCK_SELECTED_ADDRESS),
     store: {
       getState: sinon.stub().returns({
-        featureFlags: {
-          showIncomingTransactions,
+        incomingTransactionsPreferences: {
+          [CHAIN_IDS.GOERLI]: showIncomingTransactions,
+          [CHAIN_IDS.MAINNET]: showIncomingTransactions,
+          [CHAIN_IDS.SEPOLIA]: showIncomingTransactions,
         },
       }),
       subscribe: sinon.spy(),
@@ -871,7 +873,7 @@ describe('IncomingTransactionsController', function () {
       await subscription({ selectedAddress: MOCK_SELECTED_ADDRESS });
     }
 
-    it('should not happen when incoming transactions feature is disabled', async function () {
+    it('should not happen when incoming transactions feature for all network', async function () {
       const incomingTransactionsController = new IncomingTransactionsController(
         {
           ...getDefaultControllerOpts(),

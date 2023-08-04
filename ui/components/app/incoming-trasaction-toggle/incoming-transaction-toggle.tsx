@@ -10,7 +10,6 @@ import {
   FlexDirection,
   JustifyContent,
   TextVariant,
-  FontWeight,
   TextColor,
 } from '../../../helpers/constants/design-system';
 
@@ -19,7 +18,7 @@ import { TEST_CHAINS } from '../../../../shared/constants/network';
 import NetworkToggle from './network-toggle';
 
 interface IncomingTransactionToggleProps {
-  wrapperRef: PolymorphicRef<any>;
+  wrapperRef?: PolymorphicRef<any>;
   incomingTransactionsPreferences: Record<string, boolean>;
   allNetworks: [Record<string, any>];
   setIncomingTransactionsPreferences: (
@@ -74,11 +73,11 @@ const IncomingTransactionToggle = ({
 
   return (
     <Box ref={wrapperRef} className="mm-incoming-transaction-toggle">
-      <Text variant={TextVariant.bodyLgMedium} fontWeight={FontWeight.Bold}>
+      <Text variant={TextVariant.bodyMdMedium}>
         {t('showIncomingTransactions')}
       </Text>
 
-      <Text variant={TextVariant.bodyMd} color={TextColor.textAlternative}>
+      <Text variant={TextVariant.bodySm} color={TextColor.textAlternative}>
         {t('showIncomingTransactionsInformation')}
       </Text>
       <Box
@@ -88,7 +87,9 @@ const IncomingTransactionToggle = ({
         justifyContent={JustifyContent.spaceBetween}
         data-testid="incoming-transaction-toggle-enable-all"
       >
-        <Text variant={TextVariant.bodyMd}> {t('enableForAllNetworks')}</Text>
+        <Text variant={TextVariant.bodySmBold}>
+          {t('enableForAllNetworks')}
+        </Text>
         <ToggleButton
           value={isAllEnabled}
           onToggle={(value) => toggleAllEnabled(!value)}

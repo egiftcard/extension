@@ -6,12 +6,12 @@ exports[`IncomingTransactionToggle should render existing incoming transaction p
     class="mm-box mm-incoming-transaction-toggle"
   >
     <p
-      class="mm-box mm-text mm-text--body-lg-medium mm-text--font-weight-bold mm-box--color-text-default"
+      class="mm-box mm-text mm-text--body-md-medium mm-box--color-text-default"
     >
       Show incoming transactions
     </p>
     <p
-      class="mm-box mm-text mm-text--body-md mm-box--color-text-alternative"
+      class="mm-box mm-text mm-text--body-sm mm-box--color-text-alternative"
     >
       This relies on each network which will have access to your Ethereum address and your IP address.
     </p>
@@ -20,9 +20,8 @@ exports[`IncomingTransactionToggle should render existing incoming transaction p
       data-testid="incoming-transaction-toggle-enable-all"
     >
       <p
-        class="mm-box mm-text mm-text--body-md mm-box--color-text-default"
+        class="mm-box mm-text mm-text--body-sm-bold mm-box--color-text-default"
       >
-         
         Enable for all networks
       </p>
       <label

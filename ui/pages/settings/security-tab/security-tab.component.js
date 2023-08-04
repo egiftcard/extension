@@ -17,7 +17,6 @@ import {
   COINGECKO_LINK,
   CONSENSYS_PRIVACY_LINK,
   CRYPTOCOMPARE_LINK,
-  ETHERSCAN_PRIVACY_LINK,
   PRIVACY_POLICY_LINK,
 } from '../../../../shared/lib/ui-utils';
 import SRPQuiz from '../../../components/app/srp-quiz-modal/SRPQuiz';
@@ -42,6 +41,8 @@ import {
   handleSettingsRefs,
 } from '../../../helpers/utils/settings-search';
 
+import IncomingTransactionToggle from '../../../components/app/incoming-trasaction-toggle/incoming-transaction-toggle';
+
 export default class SecurityTab extends PureComponent {
   static contextTypes = {
     t: PropTypes.func,
@@ -57,8 +58,9 @@ export default class SecurityTab extends PureComponent {
     setUseNftDetection: PropTypes.func,
     participateInMetaMetrics: PropTypes.bool.isRequired,
     setParticipateInMetaMetrics: PropTypes.func.isRequired,
-    showIncomingTransactions: PropTypes.bool.isRequired,
-    setShowIncomingTransactionsFeatureFlag: PropTypes.func.isRequired,
+    incomingTransactionsPreferences: PropTypes.object.isRequired,
+    allNetworks: PropTypes.array.isRequired,
+    setIncomingTransactionsPreferences: PropTypes.func.isRequired,
     setUsePhishDetect: PropTypes.func.isRequired,
     usePhishDetect: PropTypes.bool.isRequired,
     setUse4ByteResolution: PropTypes.func.isRequired,
@@ -170,55 +172,19 @@ export default class SecurityTab extends PureComponent {
   }
 
   renderIncomingTransactionsOptIn() {
-    const { t } = this.context;
-    const { showIncomingTransactions, setShowIncomingTransactionsFeatureFlag } =
-      this.props;
+    const {
+      incomingTransactionsPreferences,
+      allNetworks,
+      setIncomingTransactionsPreferences,
+    } = this.props;
 
     return (
-      <Box
-        ref={this.settingsRefs[1]}
-        className="settings-page__content-row"
-        display={Display.Flex}
-        flexDirection={FlexDirection.Row}
-        justifyContent={JustifyContent.spaceBetween}
-      >
-        <div className="settings-page__content-item">
-          <span>{t('showIncomingTransactions')}</span>
-          <div className="settings-page__content-description">
-            {t('showIncomingTransactionsDescription', [
-              // TODO: Update to use real link
-              <a
-                href={ETHERSCAN_PRIVACY_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                key="etherscan-privacy-link"
-              >
-                {t('etherscan')}
-              </a>,
-              // TODO: Update to use real link
-              <a
-                href={CONSENSYS_PRIVACY_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                key="ic-consensys-privacy-link"
-              >
-                {t('privacyMsg')}
-              </a>,
-            ])}
-          </div>
-        </div>
-        <div
-          className="settings-page__content-item-col"
-          data-testid="showIncomingTransactions"
-        >
-          <ToggleButton
-            value={showIncomingTransactions}
-            onToggle={(value) => setShowIncomingTransactionsFeatureFlag(!value)}
-            offLabel={t('off')}
-            onLabel={t('on')}
-          />
-        </div>
-      </Box>
+      <IncomingTransactionToggle
+        wrapperRef={this.settingsRefs[1]}
+        allNetworks={allNetworks}
+        setIncomingTransactionsPreferences={setIncomingTransactionsPreferences}
+        incomingTransactionsPreferences={incomingTransactionsPreferences}
+      />
     );
   }
 
@@ -672,7 +638,7 @@ export default class SecurityTab extends PureComponent {
     );
   }
 
-  renderOpenSeaEnabledToggle() {
+  renderDisplayNftMediaToggle() {
     const { t } = this.context;
     const {
       openSeaEnabled,
@@ -705,9 +671,9 @@ export default class SecurityTab extends PureComponent {
             onToggle={(value) => {
               this.context.trackEvent({
                 category: MetaMetricsEventCategory.Settings,
-                event: 'Enabled/Disable OpenSea',
+                event: 'Enabled/Disable NFT Media',
                 properties: {
-                  action: 'Enabled/Disable OpenSea',
+                  action: 'Enabled/Disable NFT Media',
                   legacy_event: true,
                 },
               });
@@ -835,7 +801,7 @@ export default class SecurityTab extends PureComponent {
         <div className="settings-page__content-padded">
           {this.renderAutoDetectTokensToggle()}
           {this.renderBatchAccountBalanceRequestsToggle()}
-          {this.renderOpenSeaEnabledToggle()}
+          {this.renderDisplayNftMediaToggle()}
           {this.renderNftDetectionToggle()}
         </div>
         <span className="settings-page__security-tab-sub-header">

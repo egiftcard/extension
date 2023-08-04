@@ -107,9 +107,17 @@
     "alertEnabledness": {
       "unconnectedAccount": true
     },
-    "featureFlags": {
-      "showIncomingTransactions": true
+    "featureFlags": {},
+    "incomingTransactionsPreferences": {
+      "0x1": true,
+      "0xe708": false,
+      "0x4e454152": false,
+      "0xa4b1": false,
+      "0x5": false,
+      "0xaa36a7": false,
+      "0xe704": true
     },
+    "useAddressBarEnsResolution": true,
     "networkId": "5",
     "providerConfig": {
       "type": "rpc",
