@@ -1,10 +1,10 @@
 {
-  "name": "metamask-crx",
-  "version": "10.34.2",
+  "name": "extention",
+  "version": "1.0.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/metamask-extension.git"
+    "url": "https://github.com/egiftcard/extension.git"
   },
   "scripts": {
     "start": "yarn build:dev dev --apply-lavamoat=false --snow=false",
